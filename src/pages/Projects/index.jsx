@@ -47,7 +47,7 @@ const SectionWrapper = styled("div")(({ theme }) => ({
 }));
 
 const Project = () => {
-  const theme = useTheme(); // Agora está dentro do componente funcional
+ 
 
   return (
 

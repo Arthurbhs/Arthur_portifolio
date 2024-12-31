@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, styled, Typography, Grid, Modal, IconButton } from "@mui/material";
+import { Box, Container, styled, Typography, Modal, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -9,7 +9,7 @@ import Acai2 from "../../../../assets/images/segur02.png";
 import Acai3 from "../../../../assets/images/segur04.png";
 import Sorv1 from "../../../../assets/images/segur05.png";
 import Sorv2 from "../../../../assets/images/segur06.png";
-import ProjectBox from "../../../../components/ProjectsBox";
+
 
 const StyledCarousel = styled("div")(({ theme }) => ({
   backgroundColor: "#0B0A1A",

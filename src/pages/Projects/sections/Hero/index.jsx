@@ -11,12 +11,7 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   textAlign: "center",
 }));
 
-const Title = styled(Typography)(({ theme }) => ({
-  fontSize: "2rem",
-  fontWeight: "bold",
-  color: theme.palette.primary.main,
-  marginBottom: theme.spacing(2),
-}));
+
 
 const Description = styled(Typography)(({ theme }) => ({
   fontSize: "1rem",
