@@ -1,34 +1,21 @@
 import React from "react";
 import { Box, Typography, Grid, styled } from "@mui/material";
-import Game from "../../assets/images/game_control.png"
+
 // Estilizando o rodapé para garantir a responsividade
 const FooterContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: "#0B0A1A",
+  backgroundColor: "#020305",
   color: "#fff",
-  padding: theme.spacing(4),
   textAlign: "center",
-  [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(2),
-  },
+  marginTop: "50px"
+   
 }));
 
 // Componente do rodapé
 const Footer = () => {
   return (
     <FooterContainer>
-         <Box display="flex" justifyContent="center" mt={2}>
-            <img
-              src={Game}
-              alt="Logo do criador"
-              style={{
-                width: "300px",
-                height: "300px",
-                objectFit: "cover",
-                margin: "30px"
-              }}
-            />
-          </Box>
-      <Grid container spacing={4} justifyContent="center">
+        
+      <Grid container spacing={4} justifyContent="center" sx={{marginTop: 10}}>
         <Grid item xs={12} md={4}>
           
           {/* Endereço */}

@@ -59,7 +59,7 @@ const Carousel = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex), // Atualiza o índice do slide atual
+    beforeChange: ( oldIndex, newIndex) => setCurrentSlide(newIndex), // Atualiza o índice do slide atual
   };
 
   return (

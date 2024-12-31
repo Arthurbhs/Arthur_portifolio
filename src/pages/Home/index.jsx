@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { styled } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Carrossel from "./sections/Cassorrel";
 import Hero from "./sections/Hero/Hero";
@@ -8,30 +9,28 @@ import Projects from "./sections/Projects";
 import About from "./sections/SobreMim";
 import Whatz from "../../components/WhatsApp";
 import Footer from "../../components/Footer"; 
-import Git from "../../components/github"
+import Git from "../../components/github";
 
 const StyledContainer = styled("div")(({ theme }) => ({
   backgroundColor: "#0B0A1A",
   minHeight: "100vh",
-  padding: theme.spacing(4),
   display: 'flex',
-  flexDirection: 'column',  // Certifique-se de que os itens sejam empilhados verticalmente
-  justifyContent: 'space-between', // Para garantir que o rodapé fique no final
+  flexDirection: 'column',
+  justifyContent: 'space-between',
   [theme.breakpoints.down('md')]: {
     padding: theme.spacing(2),
   },
-
 }));
 
 const SectionWrapperMax = styled("div")(({ theme }) => ({
-    marginBottom: theme.spacing(45),
-    [theme.breakpoints.down('md')]: {
-      marginBottom: theme.spacing(0),
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginBottom: theme.spacing(60),
-    },
-  }));
+  marginBottom: theme.spacing(45),
+  [theme.breakpoints.down('md')]: {
+    marginBottom: theme.spacing(0),
+  },
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: theme.spacing(60),
+  },
+}));
 
 const SectionWrapper = styled("div")(({ theme }) => ({
   marginBottom: theme.spacing(10),
@@ -44,19 +43,43 @@ const SectionWrapper = styled("div")(({ theme }) => ({
 }));
 
 const SectionWrapperMin = styled("div")(({ theme }) => ({
-    marginBottom: theme.spacing(10),
-    [theme.breakpoints.down('md')]: {
-      marginBottom: theme.spacing(-30),
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginBottom: theme.spacing(-40),
-    },
-  }));
+  marginBottom: theme.spacing(10),
+  [theme.breakpoints.down('md')]: {
+    marginBottom: theme.spacing(-30),
+  },
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: theme.spacing(-40),
+  },
+}));
 
-  const WrapperSkills = styled("div")(({ theme }) => ({
-    marginBottom: theme.spacing(10),
-    position: 'relative', // Torna o elemento posicionado para aplicar o z-index
-    zIndex: 10,  // Define um valor alto para o z-index
+const WrapperSkills = styled("div")(({ theme }) => ({
+  marginBottom: theme.spacing(10),
+  position: 'relative',
+  zIndex: 10,
+}));
+
+const StyledLinkWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: "100px",
+  
+}));
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  textAlign: "center",
+  color: theme.palette.primary.main,
+  textDecoration: "none",
+  fontWeight: "bold",
+  width: "300px",
+  padding: theme.spacing(2),
+  border: `1px solid ${theme.palette.primary.main}`,
+  borderRadius: theme.shape.borderRadius,
+  transition: "background-color 0.3s, color 0.3s",
+  "&:hover": {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.background.paper,
+  },
 }));
 
 const Home = () => {
@@ -84,12 +107,12 @@ const Home = () => {
 
   return (
     <StyledContainer>
-         <SectionWrapper>
-      <NavBar 
-        scrollToCarrossel={scrollToCarrossel} 
-        scrollToAbout={scrollToAbout} 
-        scrollToSkills={scrollToSkills} 
-      />
+      <SectionWrapper>
+        <NavBar
+          scrollToCarrossel={scrollToCarrossel}
+          scrollToAbout={scrollToAbout}
+          scrollToSkills={scrollToSkills}
+        />
       </SectionWrapper>
       <SectionWrapper>
         <Hero />
@@ -99,7 +122,7 @@ const Home = () => {
       </SectionWrapper>
       <SectionWrapperMin ref={skillsRef}>
         <WrapperSkills>
-        <Skills />
+          <Skills />
         </WrapperSkills>
       </SectionWrapperMin>
       <SectionWrapperMin ref={carrosselRef}>
@@ -108,11 +131,12 @@ const Home = () => {
       <SectionWrapperMax>
         <Projects />
       </SectionWrapperMax>
+      <StyledLinkWrapper>
+        <StyledLink to="/Projetos">Ver mais projetos</StyledLink>
+      </StyledLinkWrapper>
       <Whatz />
-      <Git/>
-    
-      <Footer /> 
-     
+      <Git />
+      <Footer />
     </StyledContainer>
   );
 };

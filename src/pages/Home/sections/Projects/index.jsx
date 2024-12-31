@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Box } from "@mui/material";
-import ProjectBox from "../../../../components/ProjectsBox";
+import LinkBox from "../../../../components/siteBox";
 
 // Importando as imagens diretamente
 import argosHomeImage from "../../../../assets/images/argos_home.png";
@@ -29,7 +29,7 @@ const InfoGrid = () => {
       <Grid container spacing={1} justifyContent="center"> {/* spacing ajustado para 1 */}
         {infoData.map((info, index) => (
           <Grid item xs={12} md={6} key={index}>
-            <ProjectBox 
+            <LinkBox 
               imageSrc={info.imageSrc} 
               title={info.title} 
               description={info.description} 
