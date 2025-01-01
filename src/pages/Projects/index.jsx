@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 import Hero from "./sections/Hero";
 import SiteCarrossel from "./sections/SiteCassorrel";

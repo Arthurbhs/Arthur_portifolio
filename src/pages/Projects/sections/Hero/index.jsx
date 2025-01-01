@@ -41,7 +41,7 @@ const PortfolioSection = () => {
       <img 
           src={Servico}
           alt="Portfólio" 
-          style={{ width: "100%", borderRadius: "8px", marginTop: "20px", width: "500px"}}
+          style={{  borderRadius: "8px", marginTop: "20px", width: "500px"}}
         />
     </StyledContainer>
   );
