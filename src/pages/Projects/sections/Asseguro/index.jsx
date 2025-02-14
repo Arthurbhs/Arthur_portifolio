@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box, Container, styled, Typography, Modal, IconButton } from "@mui/material";
+import { Box, Container, styled, Typography, Modal, IconButton, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -10,19 +11,19 @@ import Acai3 from "../../../../assets/images/segur04.png";
 import Sorv1 from "../../../../assets/images/segur05.png";
 import Sorv2 from "../../../../assets/images/segur06.png";
 
-
 const StyledCarousel = styled("div")(({ theme }) => ({
   backgroundColor: "#0B0A1A",
   padding: theme.spacing(4, 0),
   textAlign: "center",
+  overflow: "hidden",
 }));
 
-const StyledImg = styled("img")(({ theme }) => ({
+const StyledImg = styled("img")(() => ({
   width: "100%",
   height: "auto",
   maxHeight: "400px",
   objectFit: "contain",
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: "8px",
   cursor: "pointer",
 }));
 
@@ -32,10 +33,10 @@ const SlideWrapper = styled(Box)(({ isCurrentSlide }) => ({
   transition: "transform 0.8s ease, opacity 0.8s ease",
 }));
 
-const ModalImage = styled("img")(({ theme }) => ({
+const ModalImage = styled("img")(() => ({
   maxWidth: "90%",
   maxHeight: "90%",
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: "8px",
 }));
 
 const CloseButton = styled(IconButton)(({ theme }) => ({
@@ -50,54 +51,33 @@ const CloseButton = styled(IconButton)(({ theme }) => ({
 }));
 
 const Carousel = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
 
   const slides = [
-    {
-      id: 1,
-      src: Acai1,
-      alt: "Slide Argos",
-      title: "banner para vistoria",
-    },
-    {
-      id: 2,
-      src: Acai2,
-      alt: "Slide Assegura",
-      title: "Banner  foco em interesse por segurança",
-    },
-    {
-      id: 3,
-      src: Acai3,
-      alt: "Slide Assegura",
-      title: "banner com foco em interesse por oferta",
-    },
-    {
-      id: 4,
-      src: Sorv1,
-      alt: "Slide Assegura",
-      title: "banner para a prospecção de clientes ",
-    },
-    {
-      id: 5,
-      src: Sorv2,
-      alt: "Slide Assegura",
-      title: "banner com foco em interesse por intimidação",
-    },
+    { id: 1, src: Acai1, alt: "Slide Argos", title: "banner para vistoria" },
+    { id: 2, src: Acai2, alt: "Slide Assegura", title: "Banner foco em segurança" },
+    { id: 3, src: Acai3, alt: "Slide Assegura", title: "banner com foco em oferta" },
+    { id: 4, src: Sorv1, alt: "Slide Assegura", title: "banner para prospecção" },
+    { id: 5, src: Sorv2, alt: "Slide Assegura", title: "banner com foco em intimidação" },
   ];
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3, // Mostra 3 imagens ao mesmo tempo
-    centerMode: true, // Permite visualizar as imagens ao lado
-    centerPadding: "40px", // Adiciona o padding nas imagens ao lado
+    slidesToShow: isMobile ? 1 : isTablet ? 2 : 3,
+    centerMode: true,
+    centerPadding: isMobile ? "20px" : "40px",
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
+    beforeChange: (_, newIndex) => setCurrentSlide(newIndex),
   };
 
   const handleImageClick = (image) => {
@@ -113,39 +93,26 @@ const Carousel = () => {
   return (
     <StyledCarousel>
       <Container maxWidth="lg">
-        {/* Carrossel */}
-        <Typography variant="h4" color="primary" mb={4} sx={{ 
-          fontFamily: "'VT323', monospace", 
-          letterSpacing: 2, // separando um pouco as letras
-          textShadow: '0 0 5px rgba(0, 255, 42, 0.7), 0 0 10px rgba(0, 255, 42, 0.7), 0 0 15px rgba(0, 255, 42, 0.7)', // efeito neon
-          fontSize: '3.5rem', // aumente o tamanho da fonte
+        <Typography variant="h4" color="primary" mb={4} sx={{ fontFamily: "'Awami Nastaliq', serif",
+            letterSpacing: 2,
+            fontSize: "2.5rem",
+            color: '#0B0A1A',
+          fontWeight: 'bold',
+          WebkitTextStroke: '1.5px rgb(30, 247, 1)', 
         }}>
-          proteção veicular
+          SEGUROS
         </Typography>
         <Slider {...settings}>
-          {slides.map((slide) => (
-            <SlideWrapper key={slide.id} isCurrentSlide={slide.id - 1 === currentSlide}>
-              <StyledImg
-                src={slide.src}
-                alt={slide.alt}
-                onClick={() => handleImageClick(slide.src)} // Abre o modal com a imagem
-              />
-              <Typography variant="h6" color="primary" mt={2}>
-                {slide.title}
-              </Typography>
+          {slides.map((slide, index) => (
+            <SlideWrapper key={slide.id} isCurrentSlide={index === currentSlide}>
+              <StyledImg src={slide.src} alt={slide.alt} onClick={() => handleImageClick(slide.src)} />
+              <Typography variant="h6" color="primary" mt={2}>{slide.title}</Typography>
             </SlideWrapper>
           ))}
         </Slider>
 
-        {/* Modal para exibir a imagem */}
         <Modal open={modalOpen} onClose={handleCloseModal}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            height="100vh"
-            position="relative"
-          >
+          <Box display="flex" alignItems="center" justifyContent="center" height="100vh" position="relative">
             <CloseButton onClick={handleCloseModal}>
               <CloseIcon />
             </CloseButton>

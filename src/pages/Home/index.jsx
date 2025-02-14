@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
-import Carrossel from "./sections/Cassorrel";
 import Hero from "./sections/Hero/Hero";
 import Skills from "./sections/Skills";
 import Projects from "./sections/Projects";
@@ -43,12 +42,12 @@ const SectionWrapper = styled("div")(({ theme }) => ({
 }));
 
 const SectionWrapperMin = styled("div")(({ theme }) => ({
-  marginBottom: theme.spacing(10),
+  marginBottom: theme.spacing(20),
   [theme.breakpoints.down('md')]: {
-    marginBottom: theme.spacing(-30),
+    marginBottom: theme.spacing(0),
   },
   [theme.breakpoints.down('sm')]: {
-    marginBottom: theme.spacing(-40),
+    marginBottom: theme.spacing(0),
   },
 }));
 
@@ -125,18 +124,9 @@ const Home = () => {
           <Skills />
         </WrapperSkills>
       </SectionWrapperMin>
-      <SectionWrapperMin ref={carrosselRef}>
-        <Carrossel />
-      </SectionWrapperMin>
-      <SectionWrapperMax>
-        <Projects />
-      </SectionWrapperMax>
-      <StyledLinkWrapper>
-        <StyledLink to="/Projetos">Ver mais projetos</StyledLink>
-      </StyledLinkWrapper>
       <Whatz />
       <Git />
-      <Footer />
+      <Projects />
     </StyledContainer>
   );
 };

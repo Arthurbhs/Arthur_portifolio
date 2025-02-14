@@ -5,8 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Argos from "../../../../assets/images/argos_home.png";
 import Assegura from "../../../../assets/images/assegura.png";
-import LinkBox from "../../../../components/siteBox";
-
+import Jurassic from "../../../../assets/images/jurassicSite.png";
+import Thermo from "../../../../assets/images/thermoflow.png";
 // Estilo para o carrossel
 const StyledCarousel = styled("div")(({ theme }) => ({
   backgroundColor: "#0B0A1A",
@@ -39,8 +39,8 @@ const Carousel = () => {
       id: 1,
       src: Argos,
       alt: "Slide Argos",
-      title: "Projeto Argos",
-      link: "https://argorseguros-prototype.netlify.app/",
+      title: "Argus Consultoria",
+      link: "https://argusseguros.com/",
     },
     {
       id: 2,
@@ -48,6 +48,20 @@ const Carousel = () => {
       alt: "Slide Assegura",
       title: "Projeto Assegura",
       link: "https://assegura-prototype.netlify.app/",
+    },
+    {
+      id: 3,
+      src: Jurassic,
+      alt: "Slide BP",
+      title: "Baixada Pré-historica Website",
+      link: "https://baixada-pre-historica-serie.netlify.app/",
+    },
+    {
+      id: 4,
+      src: Thermo,
+      alt: "Slide ThermoFlow",
+      title: "Thermo flow",
+      link: "https://thermoflowcalculator.netlify.app/Historia",
     },
   ];
 
@@ -64,36 +78,12 @@ const Carousel = () => {
     beforeChange: ( oldIndex, newIndex) => setCurrentSlide(newIndex),
   };
 
-  const infoData = [
-    {
-      imageSrc: Argos,
-      title: "Argos",
-      description:
-        "Web site ainda em desenvolvimento, para a recente empresa de seguros Argos",
-      link: "https://argusseguros.com/",
-    },
-    {
-      imageSrc: Assegura,
-      title: "Assegura",
-      description:
-        "Web site para a franquia na baixada santista da empresa de clube benefícios e proteção veicular Assegura.",
-      link: "https://assegura-prototype.netlify.app/",
-    },
-  ];
+
 
   return (
     <StyledCarousel>
       <Container maxWidth="lg">
         {/* Carrossel */}
-         <Typography variant="h4" color="primary" mb={4}   sx={{ 
-           fontFamily: "'VT323', monospace", 
-           letterSpacing: 2, // separando um pouco as letras
-           textShadow: '0 0 5px rgba(0, 255, 42, 0.7), 0 0 10px rgba(0, 255, 42, 0.7), 0 0 15px rgba(0, 255, 42, 0.7)', // efeito neon
-           fontSize: '3.5rem', // aumente o tamanho da fonte
-         }}
-         >
-          Área de Seguro
-        </Typography>
         <Slider {...settings}>
           {slides.map((slide) => (
             <SlideWrapper
@@ -114,21 +104,7 @@ const Carousel = () => {
           ))}
         </Slider>
 
-        {/* Lista de ProjectBoxes */}
-        <Box sx={{ mt: 3 }}>
-          <Grid container spacing={5} justifyContent="center">
-            {infoData.map((info, index) => (
-              <Grid item xs={10} sm={3} md={6} key={index}>
-                <LinkBox
-                  imageSrc={info.imageSrc}
-                  title={info.title}
-                  description={info.description}
-                  link={info.link}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+       
       </Container>
     </StyledCarousel>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, styled, Typography, IconButton, Modal } from "@mui/material";
+import { Box, Container, styled, Typography, IconButton, Modal, useTheme, useMediaQuery } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -9,7 +9,6 @@ import Video1 from "../../../../assets/videos/animação2.mp4";
 import Video2 from "../../../../assets/videos/animação3.mp4";
 import "@fontsource/vt323";
 
-// Estilo para o carrossel
 const StyledCarousel = styled("div")(({ theme }) => ({
   backgroundColor: "#0B0A1A",
   padding: theme.spacing(4, 0),
@@ -21,6 +20,9 @@ const StyledVideo = styled("video")(({ theme }) => ({
   maxHeight: "400px",
   borderRadius: theme.shape.borderRadius,
   cursor: "pointer",
+  [theme.breakpoints.down("sm")]: {
+    maxHeight: "250px",
+  },
 }));
 
 const SlideWrapper = styled(Box)(({ isCurrentSlide }) => ({
@@ -35,6 +37,7 @@ const ModalContent = styled("div")(({ theme }) => ({
   justifyContent: "center",
   flexDirection: "column",
   height: "100vh",
+  padding: theme.spacing(2),
 }));
 
 const CloseButton = styled(IconButton)(({ theme }) => ({
@@ -53,29 +56,26 @@ const Carousel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const slides = [
-    { id: 1, videoSrc: Video, alt: "animações de ação", type: "video" },
-    { id: 2, videoSrc: Video1, alt: "animação para web serie e documentario", type: "video" },
-    { id: 3, videoSrc: Video2, alt: "animações engraçadas", type: "video" },
+    { id: 1, videoSrc: Video, alt: "animações de ação" },
+    { id: 2, videoSrc: Video1, alt: "animação para web série e documentário" },
+    { id: 3, videoSrc: Video2, alt: "animações engraçadas" },
   ];
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    centerMode: true,
-    centerPadding: "40px",
+    slidesToShow: isSmallScreen ? 1 : 3,
     slidesToScroll: 1,
+    centerMode: !isSmallScreen,
+    centerPadding: isSmallScreen ? "0px" : "40px",
     autoplay: true,
     autoplaySpeed: 3000,
-    beforeChange: ( oldIndex, newIndex) => setCurrentSlide(newIndex),
-  };
-
-  const getCenteredIndex = (index) => {
-    const totalSlides = slides.length;
-    const centeredIndex = (currentSlide + Math.floor(settings.slidesToShow / 2)) % totalSlides;
-    return index === centeredIndex;
+    beforeChange: (_, newIndex) => setCurrentSlide(newIndex),
   };
 
   const handleContentClick = (content) => {
@@ -96,18 +96,20 @@ const Carousel = () => {
           color="primary"
           mb={4}
           sx={{
-            fontFamily: "'VT323', monospace",
+            fontFamily: "'Awami Nastaliq', serif",
             letterSpacing: 2,
-            textShadow:
-              "0 0 5px rgba(0, 255, 42, 0.7), 0 0 10px rgba(0, 255, 42, 0.7), 0 0 15px rgba(0, 255, 42, 0.7)",
-            fontSize: "3.5rem",
+            fontSize: "2.5rem",
+            color: '#0B0A1A',
+          fontWeight: 'bold',
+          WebkitTextStroke: '1.5px rgb(30, 247, 1)', // Contorno preto
+          
           }}
         >
-          animação em 2d
+          ANIMAÇÂO EM 2D
         </Typography>
         <Slider {...settings}>
           {slides.map((slide, index) => (
-            <SlideWrapper key={slide.id} isCurrentSlide={getCenteredIndex(index)}>
+            <SlideWrapper key={slide.id} isCurrentSlide={index === currentSlide}>
               <StyledVideo
                 src={slide.videoSrc}
                 onClick={() => handleContentClick(slide.videoSrc)}
@@ -123,15 +125,14 @@ const Carousel = () => {
             </SlideWrapper>
           ))}
         </Slider>
-
-        {/* Modal para exibir conteúdo (vídeo) */}
+        {/* Modal */}
         <Modal open={modalOpen} onClose={handleCloseModal}>
           <ModalContent>
             <CloseButton onClick={handleCloseModal}>
               <CloseIcon />
             </CloseButton>
             {modalContent && (
-              <StyledVideo src={modalContent} controls autoPlay />
+              <StyledVideo src={modalContent} controls autoPlay style={{ maxWidth: "90vw", maxHeight: "80vh" }} />
             )}
           </ModalContent>
         </Modal>
@@ -140,5 +141,4 @@ const Carousel = () => {
   );
 };
 
-  
 export default Carousel;

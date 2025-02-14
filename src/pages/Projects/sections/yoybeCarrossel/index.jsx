@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, styled, Typography, IconButton, Modal } from "@mui/material";
+import { Box, Container, styled, Typography, IconButton, Modal, useTheme, useMediaQuery } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -9,7 +9,6 @@ import Video1 from "../../../../assets/videos/tube2.mp4";
 import Video2 from "../../../../assets/videos/tube3.mp4";
 import "@fontsource/vt323";
 
-// Estilo para o carrossel
 const StyledCarousel = styled("div")(({ theme }) => ({
   backgroundColor: "#0B0A1A",
   padding: theme.spacing(4, 0),
@@ -21,12 +20,16 @@ const StyledVideo = styled("video")(({ theme }) => ({
   maxHeight: "400px",
   borderRadius: theme.shape.borderRadius,
   cursor: "pointer",
+  [theme.breakpoints.down("sm")]: {
+    maxHeight: "250px",
+  },
 }));
 
 const SlideWrapper = styled(Box)(({ isCurrentSlide }) => ({
   opacity: isCurrentSlide ? 1 : 0.5,
   transform: isCurrentSlide ? "scale(1.0)" : "scale(0.9)",
   transition: "transform 0.8s ease, opacity 0.8s ease",
+  padding: "10px",
 }));
 
 const ModalContent = styled("div")(({ theme }) => ({
@@ -35,6 +38,8 @@ const ModalContent = styled("div")(({ theme }) => ({
   justifyContent: "center",
   flexDirection: "column",
   height: "100vh",
+  position: "relative",
+  padding: theme.spacing(2),
 }));
 
 const CloseButton = styled(IconButton)(({ theme }) => ({
@@ -52,30 +57,27 @@ const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
   const slides = [
-    { id: 1, videoSrc: Video, alt: "music video design", type: "video" },
-    { id: 2, videoSrc: Video1, alt: "edição de videos dark", type: "video" },
-    { id: 3, videoSrc: Video2, alt: "video tutorial", type: "video" },
+    { id: 1, videoSrc: Video, alt: "Music video design", type: "video" },
+    { id: 2, videoSrc: Video1, alt: "Edição de vídeos dark", type: "video" },
+    { id: 3, videoSrc: Video2, alt: "Vídeo tutorial", type: "video" },
   ];
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: isMobile ? 1 : isTablet ? 2 : 3,
     centerMode: true,
-    centerPadding: "40px",
+    centerPadding: isMobile ? "20px" : "40px",
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    beforeChange: ( oldIndex, newIndex) => setCurrentSlide(newIndex),
-  };
-
-  const getCenteredIndex = (index) => {
-    const totalSlides = slides.length;
-    const centeredIndex = (currentSlide + Math.floor(settings.slidesToShow / 2)) % totalSlides;
-    return index === centeredIndex;
+    beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
   };
 
   const handleContentClick = (content) => {
@@ -91,23 +93,18 @@ const Carousel = () => {
   return (
     <StyledCarousel>
       <Container maxWidth="lg">
-        <Typography
-          variant="h4"
-          color="primary"
-          mb={4}
-          sx={{
-            fontFamily: "'VT323', monospace",
+      <Typography variant="h4" color="primary" mb={4} sx={{ fontFamily: "'Awami Nastaliq', serif",
             letterSpacing: 2,
-            textShadow:
-              "0 0 5px rgba(0, 255, 42, 0.7), 0 0 10px rgba(0, 255, 42, 0.7), 0 0 15px rgba(0, 255, 42, 0.7)",
-            fontSize: "3.5rem",
-          }}
-        >
-          Videos para youtube e instagram
+            fontSize: "2.5rem",
+            color: '#0B0A1A',
+          fontWeight: 'bold',
+          WebkitTextStroke: '1.5px rgb(30, 247, 1)', 
+        }}>
+         YOTUBE E INSTAGRAM
         </Typography>
         <Slider {...settings}>
           {slides.map((slide, index) => (
-            <SlideWrapper key={slide.id} isCurrentSlide={getCenteredIndex(index)}>
+            <SlideWrapper key={slide.id} isCurrentSlide={index === currentSlide}>
               <StyledVideo
                 src={slide.videoSrc}
                 onClick={() => handleContentClick(slide.videoSrc)}
@@ -117,21 +114,36 @@ const Carousel = () => {
                 muted
                 loop
               />
-              <Typography variant="h6" color="primary" mt={2}>
+              <Typography
+                variant="h6"
+                color="primary"
+                mt={2}
+                sx={{
+                  fontSize: isMobile ? "1rem" : "1.2rem",
+                  textAlign: "center",
+                }}
+              >
                 {slide.alt}
               </Typography>
             </SlideWrapper>
           ))}
         </Slider>
 
-        {/* Modal para exibir conteúdo (vídeo) */}
         <Modal open={modalOpen} onClose={handleCloseModal}>
           <ModalContent>
             <CloseButton onClick={handleCloseModal}>
               <CloseIcon />
             </CloseButton>
             {modalContent && (
-              <StyledVideo src={modalContent} controls autoPlay />
+              <StyledVideo
+                src={modalContent}
+                controls
+                autoPlay
+                style={{
+                  width: "90%",
+                  maxWidth: "800px",
+                }}
+              />
             )}
           </ModalContent>
         </Modal>
@@ -140,5 +152,4 @@ const Carousel = () => {
   );
 };
 
-  
 export default Carousel;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, styled, Typography, IconButton, Modal } from "@mui/material";
+import { Box, Container, styled, Typography, IconButton, Modal, useMediaQuery, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -9,7 +9,7 @@ import Acai2 from "../../../../assets/images/Acai2.png";
 import Acai3 from "../../../../assets/images/Acai3.png";
 import Sorv1 from "../../../../assets/images/sorvete1.png";
 import Sorv2 from "../../../../assets/images/sorvete2.png";
-import '@fontsource/vt323'; 
+import '@fontsource/vt323';
 
 // Estilo para o carrossel
 const StyledCarousel = styled("div")(({ theme }) => ({
@@ -55,50 +55,29 @@ const Carousel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
   const slides = [
-    {
-      id: 1,
-      src: Acai1,
-      alt: "Slide Argos",
-      title: "banner de Acai no copo",
-    },
-    {
-      id: 2,
-      src: Acai2,
-      alt: "Slide Assegura",
-      title: "Banner para acai de 700ml",
-    },
-    {
-      id: 3,
-      src: Acai3,
-      alt: "Slide Assegura",
-      title: "banner para acai na taça",
-    },
-    {
-      id: 4,
-      src: Sorv1,
-      alt: "Slide Assegura",
-      title: "banner para picolés gourmet",
-    },
-    {
-      id: 5,
-      src: Sorv2,
-      alt: "Slide Assegura",
-      title: "banner para sorvete de casquinha",
-    },
+    { id: 1, src: Acai1, alt: "Açaí no copo", title: "Banner de Açaí no copo" },
+    { id: 2, src: Acai2, alt: "Açaí 700ml", title: "Banner para Açaí de 700ml" },
+    { id: 3, src: Acai3, alt: "Açaí na taça", title: "Banner para Açaí na taça" },
+    { id: 4, src: Sorv1, alt: "Picolés gourmet", title: "Banner para picolés gourmet" },
+    { id: 5, src: Sorv2, alt: "Sorvete na casquinha", title: "Banner para sorvete na casquinha" },
   ];
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3, // Mostra 3 imagens ao mesmo tempo
-    centerMode: true, // Permite visualizar as imagens ao lado
-    centerPadding: "40px", // Adiciona o padding nas imagens ao lado
+    slidesToShow: isSmallScreen ? 1 : isMediumScreen ? 2 : 3, // Ajusta o número de slides conforme a tela
+    centerMode: !isSmallScreen, // Desativa o efeito de centro em telas pequenas
+    centerPadding: isSmallScreen ? "0px" : "40px",
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    beforeChange: ( oldIndex, newIndex) => setCurrentSlide(newIndex),
+    beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
   };
 
   const handleImageClick = (image) => {
@@ -114,23 +93,20 @@ const Carousel = () => {
   return (
     <StyledCarousel>
       <Container maxWidth="lg">
-        {/* Carrossel */}
-        <Typography variant="h4" color="primary" mb={4} sx={{ 
-          fontFamily: "'VT323', monospace", 
-          letterSpacing: 2, // separando um pouco as letras
-          textShadow: '0 0 5px rgba(0, 255, 42, 0.7), 0 0 10px rgba(0, 255, 42, 0.7), 0 0 15px rgba(0, 255, 42, 0.7)', // efeito neon
-          fontSize: '3.5rem', // aumente o tamanho da fonte
-        }}>
-          Açaí e Sorveteria
+       <Typography variant="h4" color="primary" mb={4} sx={{ fontFamily: "'Awami Nastaliq', serif",
+                   letterSpacing: 2,
+                   fontSize: "2.5rem",
+                   color: '#0B0A1A',
+                 fontWeight: 'bold',
+                 WebkitTextStroke: '1.5px rgb(30, 247, 1)', 
+               }}>
+          AÇAÍ E SORVETERIA
         </Typography>
+
         <Slider {...settings}>
           {slides.map((slide) => (
             <SlideWrapper key={slide.id} isCurrentSlide={slide.id - 1 === currentSlide}>
-              <StyledImg
-                src={slide.src}
-                alt={slide.alt}
-                onClick={() => handleImageClick(slide.src)} // Abre o modal com a imagem
-              />
+              <StyledImg src={slide.src} alt={slide.alt} onClick={() => handleImageClick(slide.src)} />
               <Typography variant="h6" color="primary" mt={2}>
                 {slide.title}
               </Typography>
@@ -138,7 +114,7 @@ const Carousel = () => {
           ))}
         </Slider>
 
-        {/* Modal para exibir a imagem */}
+        {/* Modal para exibir a imagem em tela cheia */}
         <Modal open={modalOpen} onClose={handleCloseModal}>
           <Box
             display="flex"

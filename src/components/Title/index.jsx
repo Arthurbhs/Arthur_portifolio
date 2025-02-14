@@ -1,31 +1,31 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
-// Importando a fonte estilo 8-bits
-import '@fontsource/press-start-2p';
-
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 const FullWidthBox = ({ title }) => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Box
       sx={{
-        width: '95%',
-        bgcolor: '#0B0A1A', // Fundo escuro para destacar o neon
-        p: 3, // Padding interno
-        textAlign: 'center', // Centralizar o texto
+        width: '100%',
+        maxWidth: isSmallScreen ? '90%' : '95%', // Ajuste para telas menores
+        bgcolor: '#0B0A1A',
+        p: { xs: 2, sm: 3, md: 4 }, // Ajustando padding para diferentes tamanhos de tela
+        textAlign: 'center',
+        mx: 'auto', // Centralizando a box
       }}
     >
       <Typography
-        variant="h4"
+        variant={isSmallScreen ? 'h4' : isMediumScreen ? 'h3' : 'h3'} // Ajustando tamanhos de fonte responsivamente
         sx={{
-          fontFamily: "'Press Start 2P', cursive", // Fonte estilo 8-bits
-          color: '#00e5ff', // Cor neon
-          textShadow: `
-            0px 0px 6px #00ab9f, 
-            0px 0px 10px #00ab9f, 
-            0px 0px 6px #00ab9f, 
-            0px 0px 10px #00ab9f
-          `, // Efeito neon
+          fontFamily: "'Awami Nastaliq', serif",
+          color: '#0B0A1A',
           fontWeight: 'bold',
+          WebkitTextStroke: isSmallScreen ? '0.9px rgb(255, 255, 255)' : '1.5px rgb(255, 255, 255)', // Contorno menor em telas pequenas
+          textTransform: 'uppercase', // Todas as letras maiúsculas
+          wordBreak: 'break-word', // Garante que textos longos quebrem corretamente
         }}
       >
         {title}

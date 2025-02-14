@@ -1,45 +1,90 @@
 import React from "react";
-import { Grid, Box } from "@mui/material";
-import LinkBox from "../../../../components/siteBox";
+import { styled } from "@mui/material/styles";
+import { Typography,Box } from "@mui/material";
+import Hero from "../../../Projects/sections/Hero";
+import SiteCarrossel from "../../../Projects/sections/SiteCassorrel";
+import CandyCarrossel from "../../../Projects/sections/CandyCarrossel";
+import SeguroCarrossel from "../../../Projects/sections/Asseguro";
+import FoodCarrossel from "../../../Projects/sections/foodCarrossel";
+import SeguroVideo from "../../../Projects/sections/SeguroVideosCarrossel";
+import AnimaCarrossel from "../../../Projects/sections/AnimaçãoCarrossel";
+import TubeCarrossel from "../../../Projects/sections/yoybeCarrossel";
+import Title from "../../../../components/Title";
+import Whatz from "../../../../components/WhatsApp";
+import Footer from "../../../../components/Footer";
+import Git from "../../../../components/github";
 
-// Importando as imagens diretamente
-import argosHomeImage from "../../../../assets/images/argos_home.png";
-import asseguraImage from "../../../../assets/images/assegura.png";
-import primitive from "../../../../assets/images/primitive.png";
-import argosLogo from "../../../../assets/images/Argos_logo.png";
+const StyledContainer = styled("div")(({ theme }) => ({
+  backgroundColor: "#0B0A1A",
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  padding: theme.spacing(4),
+  [theme.breakpoints.down("md")]: {
+    padding: theme.spacing(2),
+  },
+}));
 
-const infoData = [
-  { imageSrc: argosHomeImage, title: "Argos", description: "web site ainda em desenvolvimento, para a recente empresa de seguros Argos", link: "https://argusseguros.com/" },
-  { imageSrc: asseguraImage, title: "Assegura", description: "Web site para a franquia na baixada santista da empresa de clube beneficios e proteção veicular Assegura.", link: "https://assegura-prototype.netlify.app/" },
-  { imageSrc: primitive, title: "Artes da Baixada pré-historica", description: "Ilustrações de logos feitas para uma Web serie criada por uma canal do yotube Primitive Domain", link: "https://www.instagram.com/p/DAe7drotn7L/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" },
-  { imageSrc: argosLogo, title: "Prototipos da logo Argos", description: "Todos os prototipos, ideias e rascunhos da logo criada para a empresa de seguros Argos", link: "https://www.instagram.com/p/DAe4k9NtHIr/?igsh=YzljYTk1ODg3Zg%3D%3D" },
-  // Continue adicionando os outros itens do array...
-];
+const CenteredTypography = styled(Typography)(({ theme }) => ({
+  fontSize: "1.5rem",
+  fontWeight: "normal",
+  color: theme.palette.secondary.main,
+  textAlign: "center",
+  margin: theme.spacing(2, 0),
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.2rem",
+  },
+}));
 
-const InfoGrid = () => {
+const SectionWrapper = styled("div")(({ theme }) => ({
+  marginBottom: theme.spacing(8),
+  [theme.breakpoints.down("md")]: {
+    marginBottom: theme.spacing(6),
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: theme.spacing(4),
+  },
+}));
+
+const Project = () => {
   return (
-    <Box
-      sx={{
-        mt: 10,
-        position: "absolute",
-        left: { xs: 0, md: "10vh" }, // left é 0 em telas menores
-        backgroundColor: "#0B0A1A",
-      }}
-    >
-      <Grid container spacing={1} justifyContent="center"> {/* spacing ajustado para 1 */}
-        {infoData.map((info, index) => (
-          <Grid item xs={12} md={6} key={index}>
-            <LinkBox 
-              imageSrc={info.imageSrc} 
-              title={info.title} 
-              description={info.description} 
-              link={info.link} 
-            />
-          </Grid>
-        ))}
-      </Grid>
+    <Box>
+    <StyledContainer>
+      <Whatz />
+      <Git />
+      <SectionWrapper>
+        <Hero />
+        <Title title="Sites em React" />
+        <CenteredTypography>
+          Criação de websites utilizando a linguagem de programação React e a biblioteca Material UI
+        </CenteredTypography>
+        <SiteCarrossel />
+
+        <Title title="Edição de vídeo" />
+        <CenteredTypography>
+          Criação e edição de vídeos para marketing, aulas em curso e afins. Separamos trechos de alguns de nossos trabalhos para você.
+        </CenteredTypography>
+        <SeguroVideo />
+        <TubeCarrossel />
+        <AnimaCarrossel />
+
+        <Title title="Imagens promocionais" />
+        <CenteredTypography>
+          Criação e edição de imagens para marketing, anúncios e afins. Separamos alguns banners como exemplo.
+        </CenteredTypography>
+        <CandyCarrossel />
+        <SeguroCarrossel />
+        <FoodCarrossel />
+      </SectionWrapper>
+      
+    </StyledContainer>
+    <Footer />
     </Box>
   );
 };
 
-export default InfoGrid;
+export default Project;
