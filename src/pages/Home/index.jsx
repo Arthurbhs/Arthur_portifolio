@@ -1,13 +1,11 @@
 import React, { useRef } from "react";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Hero from "./sections/Hero/Hero";
 import Skills from "./sections/Skills";
 import Projects from "./sections/Projects";
 import About from "./sections/SobreMim";
 import Whatz from "../../components/WhatsApp";
-import Footer from "../../components/Footer"; 
 import Git from "../../components/github";
 
 const StyledContainer = styled("div")(({ theme }) => ({
@@ -21,15 +19,7 @@ const StyledContainer = styled("div")(({ theme }) => ({
   },
 }));
 
-const SectionWrapperMax = styled("div")(({ theme }) => ({
-  marginBottom: theme.spacing(45),
-  [theme.breakpoints.down('md')]: {
-    marginBottom: theme.spacing(0),
-  },
-  [theme.breakpoints.down('sm')]: {
-    marginBottom: theme.spacing(60),
-  },
-}));
+
 
 const SectionWrapper = styled("div")(({ theme }) => ({
   marginBottom: theme.spacing(10),
@@ -57,29 +47,6 @@ const WrapperSkills = styled("div")(({ theme }) => ({
   zIndex: 10,
 }));
 
-const StyledLinkWrapper = styled("div")(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginTop: "100px",
-  
-}));
-
-const StyledLink = styled(Link)(({ theme }) => ({
-  textAlign: "center",
-  color: theme.palette.primary.main,
-  textDecoration: "none",
-  fontWeight: "bold",
-  width: "300px",
-  padding: theme.spacing(2),
-  border: `1px solid ${theme.palette.primary.main}`,
-  borderRadius: theme.shape.borderRadius,
-  transition: "background-color 0.3s, color 0.3s",
-  "&:hover": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.background.paper,
-  },
-}));
 
 const Home = () => {
   const carrosselRef = useRef(null);

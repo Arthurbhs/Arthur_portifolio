@@ -25,7 +25,6 @@ const Description = styled(Typography)(({ theme }) => ({
 }));
 
 const PortfolioSection = () => {
-  const theme = useTheme(); // Obtendo o tema do Material-UI
 
   return (
     <StyledContainer>
